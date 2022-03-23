@@ -18,8 +18,9 @@ export class ParkingsService {
     return this.parkingRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} parking`;
+  findOne(id) {
+    const parking_id = id;
+    return this.parkingRepository.findOne(id);
   }
 
   update(id: number, updateParkingDto: ParkingDto) {
