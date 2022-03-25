@@ -10,7 +10,7 @@ export class ParkingsService {
 
   }
 
-  create(ParkingData: ParkingDto) {
+  create(ParkingData: ParkingEntity) {
     return this.parkingRepository.save(ParkingData);
   }
 
@@ -18,17 +18,29 @@ export class ParkingsService {
     return this.parkingRepository.find();
   }
 
-  findOne(id) {
-    const parking_id = id;
-    return this.parkingRepository.findOne(id);
+  async findOne(id): Promise<ParkingEntity> {
+
+    return await this.parkingRepository.findOne(id);
   }
 
-  update(id: number, updateParkingDto: ParkingDto) {
-    return `This action updates a #${id} parking`;
+  async update(id: number, parkingData: ParkingEntity): Promise<ParkingEntity> {
+    const {
+      parking_name,
+      parking_lat,
+      parking_long,
+      parking_price_hour
+    } = parkingData;
+    const parking = await this.findOne(id);
+    parking.parking_name = parking_name;
+    parking.parking_lat = parking_lat;
+    parking.parking_long = parking_long;
+    parking.parking_price_hour = parking_price_hour;
+    return this.parkingRepository.save(parking);
+
   }
 
   remove(id: number) {
-    return `This action removes a #${id} parking`;
+    this.parkingRepository.delete(id);
   }
 }
 

@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import { ParkingDto } from './dto/parking.dto';
+import { ParkingEntity } from './entities/parking.entity';
 import { ParkingsService } from './parkings.service';
 
 
@@ -10,8 +11,8 @@ export class ParkingsController {
 
   @Post()
   @ApiBody({ type: ParkingDto })
-  create(@Body() createParkingDto: ParkingDto) {
-    return this.parkingsService.create(createParkingDto);
+  create(@Body() parkingData: ParkingEntity) {
+    return this.parkingsService.create(parkingData);
   }
 
   @Get()
@@ -25,9 +26,9 @@ export class ParkingsController {
   }
 
   @Patch(':id')
-  @ApiBody({ type: ParkingDto })
-  update(@Param('id') id: string, @Body() updateParkingDto: ParkingDto) {
-    return this.parkingsService.update(+id, updateParkingDto);
+  @ApiBody({ type: ParkingEntity })
+  update(@Param('id') id: string, @Body() parkingData: ParkingEntity) {
+    return this.parkingsService.update(+id, parkingData);
   }
 
   @Delete(':id')

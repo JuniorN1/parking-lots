@@ -1,5 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PivoParkingSpacesService } from './pivo-parking-spaces.service';
+import { PivoParkingSpaceEntity } from './entities/pivo-parking-space.entity';
+import { ApiBody } from '@nestjs/swagger';
 import { PivoParkingSpaceDto } from './dto/pivo-parking-space.dto';
 
 @Controller('pivo-parking-spaces')
@@ -7,8 +9,9 @@ export class PivoParkingSpacesController {
   constructor(private readonly pivoParkingSpacesService: PivoParkingSpacesService) {}
 
   @Post()
-  create(@Body() createPivoParkingSpaceDto: PivoParkingSpaceDto) {
-    return this.pivoParkingSpacesService.create(createPivoParkingSpaceDto);
+  @ApiBody({ type: PivoParkingSpaceDto })
+  create(@Body() pivoParkingSpacesData: PivoParkingSpaceEntity) {
+    return this.pivoParkingSpacesService.create(pivoParkingSpacesData);
   }
 
   @Get()
@@ -22,8 +25,9 @@ export class PivoParkingSpacesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePivoParkingSpaceDto: PivoParkingSpaceDto) {
-    return this.pivoParkingSpacesService.update(+id, updatePivoParkingSpaceDto);
+  @ApiBody({ type: "exite_date" })
+  update(@Param('id') id: string, @Body() pivoParkingSpacesData: PivoParkingSpaceEntity) {
+    return this.pivoParkingSpacesService.update(+id, pivoParkingSpacesData);
   }
 
   @Delete(':id')

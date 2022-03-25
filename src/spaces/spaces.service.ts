@@ -1,25 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { SpaceDto } from './dto/space.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SpaceEntity } from './entities/space.entity';
 
 @Injectable()
 export class SpacesService {
-  create(SpaceDto: SpaceDto) {
-    return 'This action adds a new space';
+  constructor(@InjectRepository(SpaceEntity) private spaceRepository: Repository<SpaceEntity>) {
+
+  }
+
+  create(SpaceData: SpaceEntity) {
+    return  this.spaceRepository.create(SpaceData);
   }
 
   findAll() {
-    return `This action returns all spaces`;
+    return this.spaceRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} space`;
+  async findOne(id) : Promise<SpaceEntity> {
+    return await  this.spaceRepository.findOne(id);
   }
 
-  update(id: number, updateSpaceDto: SpaceDto) {
-    return `This action updates a #${id} space`;
+  async update(id: number, SpaceData: SpaceEntity) : Promise<SpaceEntity>{
+    const {
+      space_name
+    } = SpaceData;
+    const space = await this.findOne(id);
+    space.space_name = space_name;
+    return this.spaceRepository.save(space);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} space`;
+    return this.spaceRepository.delete(id);
   }
 }
