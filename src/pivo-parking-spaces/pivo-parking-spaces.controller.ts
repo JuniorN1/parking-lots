@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PivoParkingSpacesService } from './pivo-parking-spaces.service';
 import { PivoParkingSpaceEntity } from './entities/pivo-parking-space.entity';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { PivoParkingSpaceDto } from './dto/pivo-parking-space.dto';
-
+@ApiTags('Pivo Parking Spaces')
 @Controller('pivo-parking-spaces')
 export class PivoParkingSpacesController {
   constructor(private readonly pivoParkingSpacesService: PivoParkingSpacesService) {}

@@ -1,12 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete
+} from '@nestjs/common';
 import { SpacesService } from './spaces.service';
-import { SpaceDto } from './dto/space.dto';
 import { SpaceEntity } from './entities/space.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('Scapes')
 @Controller('spaces')
 export class SpacesController {
-  constructor(private readonly spacesService: SpacesService) {}
+  constructor(private readonly spacesService: SpacesService) { }
 
   @Post()
   create(@Body() spaceData: SpaceEntity) {
